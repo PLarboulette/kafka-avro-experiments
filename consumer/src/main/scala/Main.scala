@@ -1,4 +1,4 @@
-import models.Hero
+import models.{Hero, Town}
 import org.apache.avro.generic.GenericData
 import org.apache.kafka.clients.consumer.{ConsumerConfig, KafkaConsumer}
 
@@ -10,7 +10,6 @@ import scala.collection.JavaConversions._
 
 object Main extends App{
 
-
   println("Hello, I'm the consumer ! :)")
 
   val props = new Properties()
@@ -21,10 +20,11 @@ object Main extends App{
   props.put("schema.registry.url", "http://localhost:8081")
   props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
 
-  val topic = "animal-topic"
+  val heroTopic = "hero-topic"
+  val townTopic = "town-topic"
   val consumer = new KafkaConsumer[String, AnyRef](props)
 
-  consumer.subscribe(util.Arrays.asList(topic))
+  consumer.subscribe(util.Arrays.asList(heroTopic, townTopic))
 
   // Yeah, it’s ugly, but it’s a PoC, and PoCs never go into production anyway
   try while ( {
@@ -33,9 +33,17 @@ object Main extends App{
     val records = consumer.poll(Duration.of(5, ChronoUnit.SECONDS))
     for (record <- records) {
       val genericData = record.value().asInstanceOf[GenericData.Record]
-      println(genericData.getSchema)
-      val hero = Hero.recordFormat.from(genericData)
-      println(hero.name)
+      val fakeServiceFiled = genericData.getSchema.getObjectProp("FakeServiceFiled").toString
+
+      // Yes, it's not secure, it's just to show how we can access CustomProp :)
+      fakeServiceFiled match {
+        case "app-1" =>
+          val hero = Hero.recordFormat.from(genericData)
+          println(hero.name)
+        case "app-2" =>
+          val town = Town.recordFormat.from(genericData)
+          println(town.name)
+      }
     }
   }
   finally consumer.close()

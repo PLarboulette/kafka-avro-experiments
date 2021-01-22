@@ -5,7 +5,7 @@ import org.apache.avro.Schema
 
 case class Hero
 (
-  name: String,
+  name: String
 )
 
 object Hero {

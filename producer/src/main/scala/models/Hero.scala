@@ -4,7 +4,7 @@ import com.sksamuel.avro4s.{AvroDoc, AvroProp, AvroSchema, RecordFormat}
 import org.apache.avro.Schema
 
 @AvroDoc("Model of Hero")
-@AvroProp("Service", "Producer")
+@AvroProp("FakeServiceFiled", "app-1")
 @AvroProp("Version", "2")
 case class Hero
 (
