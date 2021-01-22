@@ -18,7 +18,8 @@ In this example, I add a custom prop on my two models, Hero and Town (`FakeServi
 to the Schema of each model, and so this field is also stored in the Schema Registry. 
 We can make some interesting things with that :). 
 
-Call the Schema Registry : (the id can change)
+Call the Schema Registry : (the id can change) : 
+
 ``curl --location --request GET 'localhost:8081/schemas/ids/{{id}}'``
 
 You have a response like that 
