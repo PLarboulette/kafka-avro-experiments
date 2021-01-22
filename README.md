@@ -3,7 +3,7 @@
 ## Context and docs 
  
 - You need a Schema Registry. I use here one the of the last version (currently), the 6.0.0. 
-- I use the lib Avro4s -> [here]("https://github.com/sksamuel/avro4s")
+- I use the lib Avro4s -> [here](https://github.com/sksamuel/avro4s)
 - There are many tutorials of how you can interact with Kafka (with Avro or not)  on GitHub
 - Confluent documentation 
 - Apache Kafka documentation 
